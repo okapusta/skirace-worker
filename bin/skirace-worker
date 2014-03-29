@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require './lib/skirace_worker'
+SkiraceWorker::Runner.run

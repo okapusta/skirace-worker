@@ -9,4 +9,5 @@ class Injector
   def io
     WiringPi::GPIO.new
   end
+
 end
