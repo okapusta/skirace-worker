@@ -15,7 +15,7 @@ class Worker
   end
 
   def discharge_capacitor(pin)
-    gpio.mode(options.gpio_pin, OUTPUT)
-    gpio.write(options.gpio_pin, LOW)
+    gpio.mode(pin, OUTPUT)
+    gpio.write(pin, LOW)
   end
 end

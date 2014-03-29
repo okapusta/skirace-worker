@@ -15,4 +15,12 @@ Gem::Specification.new do |s|
   s.executables << 'skirace-worker'
   s.homepage = "http://kapuh.com"
   s.license = "MIT"
+
+  s.add_dependency "god"
+  s.add_dependency "dalli"
+  s.add_dependency "dependor"
+  s.add_dependency "wiringpi"
+  s.add_dependency "rest-client"
+  s.add_dependency "god"
+  s.add_development_dependency "capistrano"
 end

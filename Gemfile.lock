@@ -1,3 +1,14 @@
+PATH
+  remote: .
+  specs:
+    skirace-worker (0.0.1)
+      dalli
+      dependor
+      god
+      god
+      rest-client
+      wiringpi
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -16,7 +27,6 @@ GEM
     rake (10.2.2)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    skirace-worker (0.0.1)
     sshkit (1.3.0)
       net-scp (>= 1.1.2)
       net-ssh
@@ -31,9 +41,4 @@ PLATFORMS
 
 DEPENDENCIES
   capistrano
-  dalli
-  dependor
-  god
-  rest-client
-  skirace-worker
-  wiringpi
+  skirace-worker!
