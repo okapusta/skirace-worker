@@ -1,0 +1,7 @@
+skirace:
+  worker:
+    memcache_server: localhost:11211 #remote host
+    memcache_options:
+      namespace: skirace
+      compress: true
+      expires_in: 300
