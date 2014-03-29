@@ -1,5 +1,5 @@
 class Options
   def gpio_pin
-    4
+    7
   end
 end
