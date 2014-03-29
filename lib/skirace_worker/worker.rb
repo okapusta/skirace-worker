@@ -6,10 +6,10 @@ class Worker
       # p "Discharging capacitor"
       # discharge_capacitor(options.gpio_pin)
       
-      gpio.write(options.gpio_pin, LOW)
+      gpio.write(options.gpio_pin.to_i, LOW)
       sleep 0.1
       reading = 0
-      while gpio.read(options.gpio_pin) == LOW
+      while gpio.read(options.gpio_pin.to_i) == LOW
         reading += 1
       end
       puts reading
