@@ -5,7 +5,14 @@ Gem::Specification.new do |s|
   s.description = 'registers crossing of finishline'
   s.authors = ["Oskar Kapusta"]
   s.email   = ["oskar,kapusta@kapuh.com"]
-  s.files   = Dir[File.expand_path('../lib/skirace_worker/**/*.rb', __FILE__)]
+  s.files   = [ 'bin/skirace-worker',
+    'lib/skirace_worker.rb',
+    'lib/skirace_worker/injector.rb',
+    'lib/skirace_worker/worker.rb',
+    'lib/skirace_worker/options.rb',
+    'lib/skirace_worker/raspberry_pi/gpio.rb'
+  ]
+  s.executables << 'skirace-worker'
   s.homepage = "http://kapuh.com"
   s.license = "MIT"
 end
