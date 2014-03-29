@@ -13,12 +13,14 @@ end
 
 module SkiraceWorker 
   class Runner
-    def self.run
-      injector.worker.run
-    end
+  	class << self
+      def run
+        injector.worker.run
+      end
 
-    def self.injector(opts = {})
-      Injector.new(opts)
+      def injector(opts = {})
+        Injector.new(opts)
+      end
     end
   end
 end
