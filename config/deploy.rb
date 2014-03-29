@@ -32,3 +32,15 @@ namespace :deploy do
   end
 
 end
+
+namespace :gem do
+  desc 'Build gem'
+  task :build do
+    execute :gem, :build, 'skirace-worker-0.0.1.gem'  
+  end
+
+  desc 'Install gem'
+  task :install do
+    execute :gem, :install, 'skirace-worker-0.0.1.gem'
+  end
+end
