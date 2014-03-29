@@ -3,13 +3,11 @@ class Worker
 
   def run
     while true
-      # p "Discharging capacitor"
-      # discharge_capacitor(options.gpio_pin)
-      
-      gpio.write(options.gpio_pin.to_i, LOW)
-      sleep 0.1
-      reading = 0
-      while gpio.read(options.gpio_pin.to_i) == LOW
+      discharge_capacitor(options.gpio_pin)      
+      sleep 0.1; reading = 0;
+
+      gpio.mode(options.gpio_pin, INPUT)
+      while gpio.read(options.gpio_pin) == LOW
         reading += 1
       end
       puts reading
@@ -17,6 +15,7 @@ class Worker
   end
 
   def discharge_capacitor(pin)
-    
+    grio.mode(options.gpio_pin, OUTPUT)
+    gpio.write(options.gpio_pin, LOW)
   end
 end
