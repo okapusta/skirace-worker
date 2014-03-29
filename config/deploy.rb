@@ -12,6 +12,16 @@ set :stage, :rpi
 
 namespace :deploy do
 
+  desc 'Build gem'
+  task :build do
+    execute :gem, :build, 'skirace-worker-0.0.1.gem'  
+  end
+
+  desc 'Install gem'
+  task :install do
+    execute :gem, :install, 'skirace-worker-0.0.1.gem'
+  end
+
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
@@ -31,16 +41,4 @@ namespace :deploy do
     end
   end
 
-end
-
-namespace :gem do
-  desc 'Build gem'
-  task :build do
-    execute :gem, :build, 'skirace-worker-0.0.1.gem'  
-  end
-
-  desc 'Install gem'
-  task :install do
-    execute :gem, :install, 'skirace-worker-0.0.1.gem'
-  end
 end

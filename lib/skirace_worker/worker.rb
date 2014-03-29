@@ -1,6 +1,7 @@
 class Worker
   takes :gpio
   takes :options
+
   def run
     while true
       p "Discharging capacitor"
@@ -14,8 +15,7 @@ class Worker
     end
   end
 
-  private
-    def discharge_capacitor(pin)
-      gpio.write(pin)
-    end
+  def discharge_capacitor(pin)
+    gpio.write(pin)
+  end
 end
