@@ -1,6 +1,8 @@
 require 'dependor'
 require 'dependor/shorty'
 require 'wiringpi'
+
+module Components; end
 module RaspberryPi; end
 module Connections; end
 module SkiraceWorker; end

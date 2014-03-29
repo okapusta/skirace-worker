@@ -1,9 +1,9 @@
 class Worker
-  takes :gpio, :options
+  takes :gpio, :options, :capacitor
 
   def run
     while true
-      discharge_capacitor(options.gpio_pin)      
+      capacitor.discharge(options.gpio_pin)      
       sleep 0.1; reading = 0;
 
       gpio.mode(options.gpio_pin, INPUT)
@@ -12,10 +12,5 @@ class Worker
       end
       puts reading
     end
-  end
-
-  def discharge_capacitor(pin)
-    gpio.mode(pin, OUTPUT)
-    gpio.write(pin, LOW)
   end
 end
