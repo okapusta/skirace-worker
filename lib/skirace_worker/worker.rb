@@ -1,6 +1,5 @@
 class Worker
-  takes :gpio
-  takes :options
+  takes :gpio, :options
 
   def run
     while true
