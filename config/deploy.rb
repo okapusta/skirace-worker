@@ -2,7 +2,7 @@
 lock '3.1.0'
 
 set :application, 'skirace-worker'
-set :repo_url, 'git@192.168.1.139:skirace-worker.git'
+set :repo_url, 'git@192.168.1.138:skirace-worker.git'
 
 set :deploy_to, '/home/app/skirace-worker'
 
