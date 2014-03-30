@@ -6,6 +6,10 @@ class Injector
   def initialize(opts = {})
   end
 
+  def http_client
+  	RestClient
+  end
+
   def io
     WiringPi::GPIO.new
   end

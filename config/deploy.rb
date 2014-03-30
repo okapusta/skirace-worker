@@ -6,8 +6,6 @@ set :repo_url, 'git@192.168.1.139:skirace-worker.git'
 
 set :deploy_to, '/home/app/skirace-worker'
 
-set :scm, :git
-
 namespace :deploy do
 
   desc 'Build gem'
