@@ -11,7 +11,7 @@ namespace :deploy do
   desc 'Build gem'
   task :build do
     on roles(:app) do
-      execute :cd, current_path
+      execute "cd #{current_path}"
       execute :gem, :build, 'skirace-worker.gemspec'
     end  
   end
@@ -19,7 +19,7 @@ namespace :deploy do
   desc 'Install gem'
   task :install do
     on roles(:app) do
-      execute :cd, current_path
+      execute "cd #{current_path}"
       execute :gem, :install, 'skirace-worker-0.0.1.gem'
     end
   end
