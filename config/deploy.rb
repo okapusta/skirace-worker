@@ -11,7 +11,7 @@ namespace :deploy do
   desc 'Build gem'
   task :build do
     on roles(:app) do
-      execute :gem, :build, 'skirace-worker-0.0.1.gem'
+      execute :gem, :build, 'skirace-worker-0.0.1.gemspec'
     end  
   end
 
