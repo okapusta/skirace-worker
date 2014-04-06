@@ -10,9 +10,9 @@ class Components::LcdScreen
   # 0x0c       disable cursor
   # 0x06       move cursor right
   # 0x01       clear display
-  def lcd_clear
+  def clear
     [0x33, 0x32, 0x28, 0x0c, 0x06, 0x01].each do |bit|
-      lcd_write_bits(bit, LOW)
+      lcd_write(bit, LOW)
     end
   end
 
@@ -26,35 +26,26 @@ class Components::LcdScreen
       message = string.ljust(options.lcd.width)
     
       message.split(//).each do |char|
-        lcd_write_bits(char.ord, true)
+        lcd_write(char.ord, HIGH)
       end 
     end
 
-    def lcd_write_bits(bits, mode = false)
+    def lcd_write(bits, mode)
       bits = lcd_binary(bits)
       gpio.write(options.lcd.pins.lcd_rs, mode)
 
       
-      lcd_write_lower_bits(bits)
-      lcd_write_upper_bits(bits)
+      lcd_write_bits((0..4), bits)
+      lcd_write_bits((4..8), bits)
+    end
+
+    def lcd_write_bits(range, bits)
+      lcd_reset_pins
+      offset = range.include?(0) ? 0 : 4
       
-    end
-
-    def lcd_write_lower_bits(bits)
-      lcd_reset_pins
-      (0..4).each do |i| 
+      range.each do |i| 
         if bits[i] == 1
-          gpio.write(lcd_data_pins[i], HIGH)
-        end
-      end
-      lcd_enable
-    end
-
-    def lcd_write_upper_bits(bits)
-      lcd_reset_pins
-      (4..8).each do |i| 
-        if bits[i] == 1
-          gpio.write(lcd_data_pins[i-4], HIGH)
+          gpio.write(lcd_data_pins[i - offset], HIGH)
         end
       end
       lcd_enable
@@ -78,7 +69,7 @@ class Components::LcdScreen
     end
 
     def lcd_data_pins
-      %w(lcd_d7 lcd_d6 lcd_d5 lcd_d4).map do |pin|
+      %w(lcd_d4 lcd_d5 lcd_d6 lcd_d7).map do |pin|
         options.lcd.pins.send(pin)
       end
     end
