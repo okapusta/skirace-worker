@@ -26,7 +26,11 @@ class Components::LcdScreen
       message = string.ljust(options.lcd.width)
     
       message.split(//).each do |char|
-        lcd_write(char.ord, HIGH)
+        if char == "\n"
+          lcd_write(0xc0)
+        else
+          lcd_write(char.ord, HIGH)
+        end
       end 
     end
 
@@ -34,7 +38,6 @@ class Components::LcdScreen
       bits = lcd_binary(bits)
       gpio.write(options.lcd.pins.lcd_rs, mode)
 
-      
       lcd_write_bits((0..4), bits)
       lcd_write_bits((4..8), bits)
     end
@@ -45,7 +48,7 @@ class Components::LcdScreen
       
       range.each do |i| 
         if bits[i] == 1
-          gpio.write(lcd_data_pins[i - offset], HIGH)
+          gpio.write(lcd_data_pins.reverse[i - offset], HIGH)
         end
       end
       lcd_enable
@@ -56,7 +59,7 @@ class Components::LcdScreen
     end
 
     def lcd_enable
-      [LOW, HIGH, LOW].each do |mode|
+      [HIGH, LOW].each do |mode|
         gpio.write(options.lcd.pins.lcd_e, mode)
         lcd_delay(1)
       end
