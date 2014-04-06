@@ -1,6 +1,7 @@
 require 'dependor'
 require 'dependor/shorty'
 require 'wiringpi'
+require 'ostruct'
 
 module Components; end
 module RaspberryPi; end
