@@ -35,6 +35,8 @@ class Components::LcdScreen
     end
 
     def lcd_write(bits, mode)
+      lcd_delay(10)
+      
       bits = lcd_binary(bits)
       gpio.write(options.lcd.pins.lcd_rs, mode)
 
