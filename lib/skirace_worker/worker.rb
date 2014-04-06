@@ -1,12 +1,11 @@
 class Worker
   takes :gpio, :options, :capacitor
 
-  def run
+  def work
     while true
       capacitor.discharge(options.gpio_pin)      
       sleep 0.01; reading = 0;
 
-      gpio.mode(options.gpio_pin, INPUT)
       while gpio.read(options.gpio_pin) == LOW
         reading += 1
       end
