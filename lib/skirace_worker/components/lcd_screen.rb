@@ -63,6 +63,7 @@ class Components::LcdScreen
       
       lcd_enable
       
+      lcd_reset_pins      
 
       gpio.write(options.lcd.pins.lcd_d4, HIGH) if bits&0x01 == bits&0x01
       
@@ -88,6 +89,8 @@ class Components::LcdScreen
     end
 
     def lcd_enable
+      lcd_delay(50)
+
       [HIGH, LOW].each do |mode|
         lcd_delay(50)
         gpio.write(options.lcd.pins.lcd_e, mode)
