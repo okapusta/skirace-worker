@@ -24,17 +24,18 @@ class Components::LcdScreen
 
     def lcd_string(string)
       message = string.ljust(options.lcd.width)
-    
+      lcd_write(options.line_1)
+
       message.split(//).each do |char|
         if char == "\n"
-          lcd_write(0xc0)
+          lcd_write(options.line_2)
         else
           lcd_write(char.ord, HIGH)
         end
       end 
     end
 
-    def lcd_write(bits, mode)
+    def lcd_write(bits, mode = LOW)
       lcd_delay(10)
       
       bits = lcd_binary(bits)

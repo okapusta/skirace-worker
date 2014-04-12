@@ -8,6 +8,8 @@ class Options
   def lcd
     struct({
         width: 16,
+        line_1: 0x80,
+        line_2: 0xc0,
         pins: struct({
           lcd_e: 10,  # GPIO pin 8
           lcd_rs: 11, # GPIO pin 7
