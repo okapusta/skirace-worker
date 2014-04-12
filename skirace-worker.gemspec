@@ -22,5 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "wiringpi"
   s.add_dependency "rest-client"
   s.add_dependency "god"
+  s.add_dependency "a9n"
+  s.add_dependency "pry"
   s.add_development_dependency "capistrano"
 end
