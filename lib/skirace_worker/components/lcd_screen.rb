@@ -49,14 +49,34 @@ class Components::LcdScreen
 
     def lcd_write_bits(range, bits)
       lcd_reset_pins
-      offset = range.include?(0) ? 0 : 4
-      
-      range.each do |i| 
-        if bits[i] == '1'
-          gpio.write(lcd_data_pins[i - offset], HIGH)
-        end
+      if bits&0x10 == bits&0x10 
+        gpio.write(options.lcd.lcd_d4, HIGH)
+      elsif bits&0x20 == bits&0x20
+        gpio.write(options.lcd.lcd_d5 HIGH)
+      elsif bits&0x40 == bits&0x40
+        gpio.write(options.lcd.lcd_d6 HIGH)    
+      elsif bits&0x80 == bits&0x80 
+        gpio.write(options.lcd.lcd_d7 HIGH)
       end
       lcd_enable
+      if bits&0x01 == bits&0x01 
+        gpio.write(options.lcd.lcd_d4, HIGH)
+      elsif bits&0x02 == bits&0x02
+        gpio.write(options.lcd.lcd_d5 HIGH)
+      elsif bits&0x04 == bits&0x04
+        gpio.write(options.lcd.lcd_d6 HIGH)    
+      elsif bits&0x08 == bits&0x08 
+        gpio.write(options.lcd.lcd_d7 HIGH)
+      end
+      lcd_enable
+      # offset = range.include?(0) ? 0 : 4
+      
+      # range.each do |i| 
+      #   if bits[i] == '1'
+      #     gpio.write(lcd_data_pins[i - offset], HIGH)
+      #   end
+      # end
+      # lcd_enable
     end
 
     def lcd_delay(microseconds)
@@ -65,8 +85,8 @@ class Components::LcdScreen
 
     def lcd_enable
       [HIGH, LOW].each do |mode|
-        gpio.write(options.lcd.pins.lcd_e, mode)
         lcd_delay(50)
+        gpio.write(options.lcd.pins.lcd_e, mode)
       end
     end
 
