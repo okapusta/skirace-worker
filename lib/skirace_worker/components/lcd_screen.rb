@@ -51,7 +51,7 @@ class Components::LcdScreen
       lcd_reset_pins
 
       bits = bits.to_i
-
+      binding.pry
       if bits&0x10 == bits&0x10 
         gpio.write(options.lcd.pins.lcd_d4, HIGH)
       elsif bits&0x20 == bits&0x20
