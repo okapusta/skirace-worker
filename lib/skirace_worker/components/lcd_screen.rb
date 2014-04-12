@@ -2,6 +2,8 @@ class Components::LcdScreen
   takes :gpio, :options
 
   def write(string)
+    clear
+    
     lcd_string(string)   
   end
 
