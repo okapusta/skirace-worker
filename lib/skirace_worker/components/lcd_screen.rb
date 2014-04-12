@@ -24,11 +24,11 @@ class Components::LcdScreen
 
     def lcd_string(string)
       message = string.ljust(options.lcd.width)
-      lcd_write(options.line_1)
+      lcd_write(options.lcd.line_1)
 
       message.split(//).each do |char|
         if char == "\n"
-          lcd_write(options.line_2)
+          lcd_write(options.lcd.line_2)
         else
           lcd_write(char.ord, HIGH)
         end
