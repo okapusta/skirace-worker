@@ -44,13 +44,14 @@ class Components::LcdScreen
       gpio.write(options.lcd.pins.lcd_rs, mode)
 
       lcd_write_bits((0..3), bits)
-      lcd_write_bits((3..7), bits)
+      
+      #lcd_write_bits((3..7), bits)
     end
 
     def lcd_write_bits(range, bits)
       lcd_reset_pins
 
-      bits = bits.to_i
+      bits = bits.to_i if bits.kind_of?(String)
        
       gpio.write(options.lcd.pins.lcd_d4, HIGH) if bits&0x10 == bits&0x10
       
