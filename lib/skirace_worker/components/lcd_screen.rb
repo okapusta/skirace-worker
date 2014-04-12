@@ -40,7 +40,7 @@ class Components::LcdScreen
     def lcd_write(bits, mode = LOW)
       lcd_delay(10)
 
-      bits = lcd_binary(bits)
+      #bits = lcd_binary(bits)
       gpio.write(options.lcd.pins.lcd_rs, mode)
 
       lcd_write_bits((0..3), bits)
@@ -55,21 +55,22 @@ class Components::LcdScreen
       if bits&0x10 == bits&0x10 
         gpio.write(options.lcd.pins.lcd_d4, HIGH)
       elsif bits&0x20 == bits&0x20
-        gpio.write(options.lcd.pins.lcd_d5 HIGH)
+        puts "KURWA"
+        gpio.write(options.lcd.pins.lcd_d5, HIGH)
       elsif bits&0x40 == bits&0x40
-        gpio.write(options.lcd.pins.lcd_d6 HIGH)    
+        gpio.write(options.lcd.pins.lcd_d6, HIGH)    
       elsif bits&0x80 == bits&0x80 
-        gpio.write(options.lcd.pins.lcd_d7 HIGH)
+        gpio.write(options.lcd.pins.lcd_d7, HIGH)
       end
       lcd_enable
       if bits&0x01 == bits&0x01 
         gpio.write(options.lcd.pins.lcd_d4, HIGH)
       elsif bits&0x02 == bits&0x02
-        gpio.write(options.lcd.pins.lcd_d5 HIGH)
+        gpio.write(options.lcd.pins.lcd_d5, HIGH)
       elsif bits&0x04 == bits&0x04
-        gpio.write(options.lcd.pins.lcd_d6 HIGH)    
+        gpio.write(options.lcd.pins.lcd_d6, HIGH)    
       elsif bits&0x08 == bits&0x08 
-        gpio.write(options.lcd.pins.lcd_d7 HIGH)
+        gpio.write(options.lcd.pins.lcd_d7, HIGH)
       end
       lcd_enable
       # offset = range.include?(0) ? 0 : 4
