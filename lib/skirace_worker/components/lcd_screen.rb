@@ -51,25 +51,25 @@ class Components::LcdScreen
       lcd_reset_pins
 
       bits = bits.to_i
-      
+
       if bits&0x10 == bits&0x10 
-        gpio.write(options.lcd.lcd_d4, HIGH)
+        gpio.write(options.lcd.pins.lcd_d4, HIGH)
       elsif bits&0x20 == bits&0x20
-        gpio.write(options.lcd.lcd_d5 HIGH)
+        gpio.write(options.lcd.pins.lcd_d5 HIGH)
       elsif bits&0x40 == bits&0x40
-        gpio.write(options.lcd.lcd_d6 HIGH)    
+        gpio.write(options.lcd.pins.lcd_d6 HIGH)    
       elsif bits&0x80 == bits&0x80 
-        gpio.write(options.lcd.lcd_d7 HIGH)
+        gpio.write(options.lcd.pins.lcd_d7 HIGH)
       end
       lcd_enable
       if bits&0x01 == bits&0x01 
-        gpio.write(options.lcd.lcd_d4, HIGH)
+        gpio.write(options.lcd.pins.lcd_d4, HIGH)
       elsif bits&0x02 == bits&0x02
-        gpio.write(options.lcd.lcd_d5 HIGH)
+        gpio.write(options.lcd.pins.lcd_d5 HIGH)
       elsif bits&0x04 == bits&0x04
-        gpio.write(options.lcd.lcd_d6 HIGH)    
+        gpio.write(options.lcd.pins.lcd_d6 HIGH)    
       elsif bits&0x08 == bits&0x08 
-        gpio.write(options.lcd.lcd_d7 HIGH)
+        gpio.write(options.lcd.pins.lcd_d7 HIGH)
       end
       lcd_enable
       # offset = range.include?(0) ? 0 : 4
