@@ -18,7 +18,7 @@ class Injector
   end
 
   def io
-    WiringPi::GPIO.new(WPI_MODE_SYS)
+    WiringPi::GPIO.new(WPI_MODE_PINS)
   end
 
   private
