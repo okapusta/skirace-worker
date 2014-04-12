@@ -18,7 +18,7 @@ class Injector
   end
 
   def io
-    WiringPi::GPIO.new
+    WiringPi::GPIO.new(WPI_MODE_PINS)
   end
 
   private
@@ -26,7 +26,7 @@ class Injector
     def load_config
       A9n.root = File.expand_path('../../..', __FILE__)
       A9n.local_app = SkiraceWorker
-      
+
       A9n.load
     end
 
