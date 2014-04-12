@@ -49,7 +49,7 @@ class Components::LcdScreen
       offset = range.include?(0) ? 0 : 4
       
       range.each do |i| 
-        if bits[i] == 1
+        if bits[i] == '1'
           gpio.write(lcd_data_pins.reverse[i - offset], HIGH)
         end
       end
