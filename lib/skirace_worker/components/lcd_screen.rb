@@ -49,6 +49,9 @@ class Components::LcdScreen
 
     def lcd_write_bits(range, bits)
       lcd_reset_pins
+
+      bits = bits.to_i
+      
       if bits&0x10 == bits&0x10 
         gpio.write(options.lcd.lcd_d4, HIGH)
       elsif bits&0x20 == bits&0x20
