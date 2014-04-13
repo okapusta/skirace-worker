@@ -164,10 +164,8 @@ class Components::LcdScreen
 
       lcd_data_pins.each do |pin|
         if pin == lcd_d7
-          p "pin #{pin} high"
           gpio.write(pin, HIGH) 
         else
-        	p "pin #{pin} low"
           gpio.write(pin, LOW)
         end
       end
@@ -205,7 +203,7 @@ class Components::LcdScreen
     def lcd_display_setup(display, cursor, type)
       lcd_reset_pins
 
-      gpio.write(lcd_d7, HIGH)
+      gpio.write(lcd_d7, LOW)
       gpio.write(lcd_d6, display)
       gpio.write(lcd_d5, cursor)
       gpio.write(lcd_d4, type)
@@ -218,10 +216,8 @@ class Components::LcdScreen
       
       lcd_data_pins.each do |pin|
       	if pin == lcd_d4
-      		p "pin #{pin} high"
       	  gpio.write(pin, HIGH)
       	else
-      		p "pin #{pin} low"
       	  gpio.write(pin, LOW)
       	end
       end
