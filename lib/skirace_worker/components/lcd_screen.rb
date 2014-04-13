@@ -1,24 +1,34 @@
 class Components::LcdScreen
   takes :gpio, :options
 
+  cattr_accessor :initialized
+
   def write(string)
+    lcd_init unless initialized
+    
     clear
     
     lcd_string(string)   
   end
 
-  # 0x33, 0x32 initialize
-  # 0x28       matrix 5x7
-  # 0x0c       disable cursor
-  # 0x06       move cursor right
   # 0x01       clear display
   def clear
-    [0x33, 0x32, 0x28, 0x0c, 0x06, 0x01].each do |bit|
-      lcd_write(bit, LOW)
-    end
+    lcd_write(0x01, LOW)
   end
 
   private
+
+    # 0x33, 0x32 initialize
+    # 0x28       matrix 5x7
+    # 0x0c       disable cursor
+    # 0x06       move cursor right
+    def lcd_init
+      [0x33, 0x32, 0x28, 0x0c, 0x06].each do |bit|
+        lcd_write(bit, LOW)
+      end
+
+      initialized = true
+    end
 
     def lcd_binary(integer)
       integer.to_s(2).rjust(8, '0')
