@@ -114,6 +114,7 @@ class Components::LcdScreen
     end
 
     def lcd_enable
+      p 'enable'
       [LOW, HIGH, LOW].each do |mode|
         gpio.write(options.lcd.pins.lcd_e, mode)
         lcd_delay_microseconds(150)
