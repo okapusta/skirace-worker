@@ -51,7 +51,7 @@ class Components::LcdScreen
       
       range.each do |i| 
         if bits[i].to_i == 1
-          gpio.write(lcd_data_pins[i - offset], HIGH)
+          gpio.write(lcd_data_pins.reverse[i - offset], HIGH)
         end
       end
       lcd_enable
