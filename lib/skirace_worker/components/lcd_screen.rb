@@ -33,7 +33,7 @@ class Components::LcdScreen
             puts offset
             puts lcd_data_pins.reverse[i - offset]
 
-            gpio.write(options.lcd.pins.lcd_rs, mode)
+            gpio.write(options.lcd.pins.lcd_rs, LOW)
             gpio.write(lcd_data_pins.reverse[i - offset], HIGH)
           end
           lcd_delay(3000)
