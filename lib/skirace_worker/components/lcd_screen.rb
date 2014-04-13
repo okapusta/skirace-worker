@@ -74,7 +74,8 @@ class Components::LcdScreen
     def lcd_write(bits, mode = LOW)
       p lcd_binary(bits)
       p %w(lcd_d4 lcd_d5 lcd_d6 lcd_d7).reverse
-      lcd_write_bits((0..3), mode, lcd_binary(bits))display
+      
+      lcd_write_bits((0..3), mode, lcd_binary(bits))
       lcd_write_bits((3..7), mode, lcd_binary(bits))
     end
 
