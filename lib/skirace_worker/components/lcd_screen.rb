@@ -27,6 +27,8 @@ class Components::LcdScreen
 
       # init display
       3.times do
+        lcd_delay(42000)
+        
         lcd_data_pins.each do |pin|
           if lcd_data_pins.first(2).include?(pin)
             p "init pin: #{pin}"
