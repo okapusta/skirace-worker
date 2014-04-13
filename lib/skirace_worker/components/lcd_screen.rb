@@ -23,29 +23,38 @@ class Components::LcdScreen
     # 0x0c       disable cursor
     # 0x06       move cursor right
     def lcd_init
+      gpio.write(options.lcd.pins.lcd_rs, LOW)
+
       # init display
       3.times do
-        lcd_data_pins.first(2).each do |pin|
-          gpio.write(options.lcd.pins.lcd_rs, LOW)
-          gpio.write(pin, HIGH)
+        lcd_data_pins.each do |pin|
+          if lcd_data_pins.first(2).include?(pin)
+            gpio.write(pin, HIGH)
+          else
+            gpio.write(pin, LOW)
+          end
         end
         lcd_enable
       end 
 
       # 4 bit mode
       2.times do 
-        gpio.write(options.lcd.pins.lcd_rs, LOW)
-        gpio.write(lcd_data_pins[1], HIGH)
-
+        lcd_data_pins.each do |pin| 
+        if lcd_data_pins[1] == pin
+          gpio.write(pin, HIGH)
+        else
+          gpio.write(pin LOW)
+        end
+        
         lcd_enable
       end
 
-      # 2 lines
-      gpio.write(options.lcd.pins.lcd_rs, LOW)
-
       lcd_data_pins.each do |pin|
-        gpio.write(pin, HIGH) if pin == 1
-        gpio.write(pin, LOW)
+        if pin == 1
+          gpio.write(pin, HIGH)
+        else 
+          gpio.write(pin, LOW)
+        end
       end
 
       lcd_enable
