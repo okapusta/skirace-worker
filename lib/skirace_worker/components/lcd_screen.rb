@@ -23,7 +23,22 @@ class Components::LcdScreen
     # 0x0c       disable cursor
     # 0x06       move cursor right
     def lcd_init
-      [0x33, 0x32, 0x28, 0x0c, 0x06].each do |bit|
+      3.times do
+        lcd_binary(0x33).split(//).each do |i|
+          offset = i > 3 ? 4 : 0
+ 
+          if bits[i].to_i == 1
+            puts "from init"
+            puts offset
+            puts lcd_data_pins.reverse[i - offset]
+
+            gpio.write(options.lcd.pins.lcd_rs, mode)
+            gpio.write(lcd_data_pins.reverse[i - offset], HIGH)
+          end
+          lcd_delay(3000)
+        end
+
+      [0x28, 0x0c, 0x06].each do |bit| # 0x33, 0x32, 
         lcd_write(bit, LOW)
       end
 
