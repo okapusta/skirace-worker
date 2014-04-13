@@ -24,7 +24,7 @@ class Components::LcdScreen
   def clear
     init and return unless @@initialized
 
-    lcd_clear()
+    # lcd_clear()
   end
 
 
@@ -35,6 +35,7 @@ class Components::LcdScreen
     # 0x0c       disable cursor
     # 0x06       move cursor right
     def lcd_init
+      puts 'init'
       gpio.write(options.lcd.pins.lcd_rs, LOW)
 
       # init display
@@ -112,7 +113,6 @@ class Components::LcdScreen
     end
 
     def lcd_enable
-      p 'enable'
       [LOW, HIGH, LOW].each do |mode|
         gpio.write(options.lcd.pins.lcd_e, mode)
         lcd_delay_microseconds(10) # 150
