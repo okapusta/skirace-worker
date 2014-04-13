@@ -23,16 +23,19 @@ class Components::LcdScreen
     # 0x0c       disable cursor
     # 0x06       move cursor right
     def lcd_init
+      
+      %w(lcd_d4 lcd_d5 lcd_d6 lcd_d7).each do |pin|
+      	define_method(:pin, options.lcd.pins.send(pin))
+      end
+
       gpio.write(options.lcd.pins.lcd_rs, LOW)
 
       # init display
       3.times do
-        lcd_delay(42000)
+        lcd_delay_miliseconds(42)
         
         lcd_data_pins.each do |pin|
-          if lcd_data_pins.first(2).include?(pin)
-            p "init pin: #{pin}"
-
+          if [lcd_4, lcd_5].include?(pin)
             gpio.write(pin, HIGH)
           else
             gpio.write(pin, LOW)
@@ -96,8 +99,12 @@ class Components::LcdScreen
       lcd_enable
     end
 
-    def lcd_delay(microseconds)
+    def lcd_delay_microseconds(microseconds)
       sleep(microseconds/1000000.to_f)
+    end
+
+    def lcd_delay_miliseconds(miliseconds)
+      sleep(miliseconds/1000.to_f)
     end
 
     def lcd_enable
