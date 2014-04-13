@@ -40,10 +40,11 @@ class Components::LcdScreen
       # 4 bit mode
       2.times do 
         lcd_data_pins.each do |pin| 
-        if lcd_data_pins[1] == pin
-          gpio.write(pin, HIGH)
-        else
-          gpio.write(pin LOW)
+          if lcd_data_pins[1] == pin
+            gpio.write(pin, HIGH)
+          else
+            gpio.write(pin LOW)
+          end
         end
         
         lcd_enable
