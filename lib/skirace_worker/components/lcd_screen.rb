@@ -23,6 +23,7 @@ class Components::LcdScreen
     # 0x0c       disable cursor
     # 0x06       move cursor right
     def lcd_init
+      # init display
       3.times do
         lcd_data_pins.first(2).each do |pin|
           gpio.write(options.lcd.pins.lcd_rs, LOW)
@@ -31,6 +32,7 @@ class Components::LcdScreen
         lcd_enable
       end 
 
+      # 4 bit mode
       2.times do 
         gpio.write(options.lcd.pins.lcd_rs, LOW)
         gpio.write(lcd_data_pins[1], HIGH)
@@ -38,10 +40,32 @@ class Components::LcdScreen
         lcd_enable
       end
 
+      # 2 lines
+      gpio.write(options.lcd.pins.lcd_rs, LOW)
 
-      # [0x33, 0b00000011, 0x28, 0x0c, 0x06].each do |bit| 
-      #   lcd_write(bit, LOW)
-      # end
+      lcd_data_pins.each do |pin|
+        gpio.write(lcd_data_pins[pin], HIGH) if pin == 1
+        gpio.write(lcd_data_pins[pin], LOW)
+      end
+
+      lcd_enable
+
+      lcd_data_pins.each do |pin|
+        gpio.write(lcd_data_pins[pin], LOW)
+      end
+
+      lcd_enable
+
+      lcd_data_pins.each do |pin|
+        gpio.write(lcd_data_pins[pin], HIGH) if pin == 1
+        gpio.write(lcd_data_pins[pin], LOW)
+      end
+
+      lcd_enable
+      # 0x33, 0b00000011, 0x28, 0x0c,
+      [0x01, 0x06].each do |bit| 
+        lcd_write(bit, LOW)
+      end
 
       @@initialized = true
     end
@@ -69,18 +93,15 @@ class Components::LcdScreen
     end
 
     def lcd_write_bits(range, mode, bits)
-      puts "Bits: #{bits}"
-      puts "#{lcd_data_pins.reverse}"
-      puts "Range: #{range}, mode: #{mode}"
-      
       gpio.write(options.lcd.pins.lcd_rs, mode)
-      lcd_reset_pins
 
       offset = range.include?(0) ? 0 : 4
       
       range.each do |i| 
         if bits[i].to_i == 1
           gpio.write(lcd_data_pins.reverse[i - offset], HIGH)
+        else
+          gpio.write(lcd_data_pins.reverse[i - offset], LOW)
         end
       end
       lcd_enable
