@@ -7,7 +7,7 @@ class Injector
 
   def initialize(opts = {})
     load_config
-    
+
     io.wiringPiSetup
   end
 
@@ -20,7 +20,7 @@ class Injector
   end
 
   def io
-    WiringPi
+    Wiringpi
   end
 
   private
