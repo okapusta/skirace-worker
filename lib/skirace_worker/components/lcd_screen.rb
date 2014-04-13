@@ -27,14 +27,13 @@ class Components::LcdScreen
         lcd_data_pins.first(2).each do |pin|
           gpio.write(options.lcd.pins.lcd_rs, LOW)
           gpio.write(pin, HIGH)
-
-          lcd_enable
         end
+        lcd_enable
       end 
 
       2.times do 
         gpio.write(options.lcd.pins.lcd_rs, LOW)
-        gpio.write(lcd_data_pins[1], mode)
+        gpio.write(lcd_data_pins[1], HIGH)
 
         lcd_enable
       end
