@@ -44,12 +44,12 @@ class Components::LcdScreen
 
       lcd_display_off()
   
-      # 0x33, 0b00000011, 0x28, 0x0c,
-      [0x01].each do |bit| 
-        lcd_write(bit, LOW)
-      end
+      # 0x33, 0b00000011, 0x28, 0x0c, 
+      lcd_write(0x01, LOW)
+      
+      lcd_entry_mode_set
 
-      lcd_set_entry_mode
+      lcd_display_setup(HIGH, HIGH, LOW)
 
       @@initialized = true
     end
@@ -74,7 +74,7 @@ class Components::LcdScreen
     def lcd_write(bits, mode = LOW)
       p lcd_binary(bits)
       p %w(lcd_d4 lcd_d5 lcd_d6 lcd_d7).reverse
-      lcd_write_bits((0..3), mode, lcd_binary(bits))
+      lcd_write_bits((0..3), mode, lcd_binary(bits))display
       lcd_write_bits((3..7), mode, lcd_binary(bits))
     end
 
@@ -158,7 +158,7 @@ class Components::LcdScreen
       lcd_enable
     end
 
-    def lcd_set_entry_mode
+    def lcd_entry_mode_set
       lcd_reset_pins
 
       lcd_data_pins.each do |pin|
@@ -168,6 +168,17 @@ class Components::LcdScreen
           gpio.write(pin, LOW)
         end
       end
+    end
+
+    def lcd_display_setup(display, cursor, type)
+      lcd_reset_pins
+
+      gpio.write(options.lcd.pins.lcd_d7, HIGH)
+      gpio.write(options.lcd.pins.lcd_d7, display)
+      gpio.write(options.lcd.pins.lcd_d7, cursor)
+      gpio.write(options.lcd.pins.lcd_d7, type)
+
+      lcd_enable
     end
 
 end
