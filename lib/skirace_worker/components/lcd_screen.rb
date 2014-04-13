@@ -43,10 +43,8 @@ class Components::LcdScreen
         
         lcd_data_pins.each do |pin|
           if [lcd_d4, lcd_d5].include?(pin)
-          	p "pin #{pin} high"
             gpio.write(pin, HIGH)
           else
-          	p "pin #{pin} low"
             gpio.write(pin, LOW)
           end
         end
@@ -117,7 +115,7 @@ class Components::LcdScreen
       p 'enable'
       [LOW, HIGH, LOW].each do |mode|
         gpio.write(options.lcd.pins.lcd_e, mode)
-        lcd_delay_microseconds(150)
+        lcd_delay_microseconds(1500) # 150
       end
     end
 
@@ -132,15 +130,17 @@ class Components::LcdScreen
     def lcd_data_pins
       %w(lcd_d4 lcd_d5 lcd_d6 lcd_d7).map do |pin|
         options.lcd.pins.send(pin)
-      end
+      end.reverse
     end
 
     def lcd_set_4_bit_mode
       2.times do 
         lcd_data_pins.each do |pin| 
           if lcd_d5 == pin
+          	p "pin #{pin} high"
             gpio.write(pin, HIGH)
           else
+          	p "pin #{pin} low"
             gpio.write(pin, LOW)
           end
         end
