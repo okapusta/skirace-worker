@@ -38,50 +38,23 @@ class Components::LcdScreen
     end
 
     def lcd_write(bits, mode = LOW)
-      lcd_delay(10)
-
-      #bits = lcd_binary(bits)
       gpio.write(options.lcd.pins.lcd_rs, mode)
 
-      lcd_write_bits((0..3), bits)
-      
-      #lcd_write_bits((3..7), bits)
+      lcd_write_bits((0..3), lcd_binary(bits))
+      lcd_write_bits((3..7), lcd_binary(bits))
     end
 
     def lcd_write_bits(range, bits)
-      lcd_reset_pins
+      # lcd_reset_pins
 
-      bits = bits.to_i if bits.kind_of?(String)
-       
-      gpio.write(options.lcd.pins.lcd_d4, HIGH) if bits&0x10 == bits&0x10
+      offset = range.include?(0) ? 0 : 4
       
-      gpio.write(options.lcd.pins.lcd_d5, HIGH) if bits&0x20 == bits&0x20
-      
-      gpio.write(options.lcd.pins.lcd_d6, HIGH) if bits&0x40 == bits&0x40    
-      
-      gpio.write(options.lcd.pins.lcd_d7, HIGH) if bits&0x80 == bits&0x80 
-      
+      range.each do |i| 
+        if bits[i].to_i == 1
+          gpio.write(lcd_data_pins[i - offset], HIGH)
+        end
+      end
       lcd_enable
-      
-      lcd_reset_pins      
-
-      gpio.write(options.lcd.pins.lcd_d4, HIGH) if bits&0x01 == bits&0x01
-      
-      gpio.write(options.lcd.pins.lcd_d5, HIGH) if bits&0x02 == bits&0x02
-      
-      gpio.write(options.lcd.pins.lcd_d6, HIGH) if bits&0x04 == bits&0x04    
-       
-      gpio.write(options.lcd.pins.lcd_d7, HIGH) if bits&0x08 == bits&0x08
-      
-      lcd_enable
-      # offset = range.include?(0) ? 0 : 4
-      
-      # range.each do |i| 
-      #   if bits[i] == '1'
-      #     gpio.write(lcd_data_pins[i - offset], HIGH)
-      #   end
-      # end
-      # lcd_enable
     end
 
     def lcd_delay(microseconds)
@@ -89,10 +62,8 @@ class Components::LcdScreen
     end
 
     def lcd_enable
-      lcd_delay(50)
-
-      [HIGH, LOW].each do |mode|
-        lcd_delay(50)
+      [LOW, HIGH, LOW].each do |mode|
+        lcd_delay(10)
         gpio.write(options.lcd.pins.lcd_e, mode)
       end
     end
@@ -104,7 +75,7 @@ class Components::LcdScreen
     end
 
     def lcd_data_pins
-      %w(lcd_d4 lcd_d5 lcd_d6 lcd_d7).map do |pin|
+      %w(lcd_d7 lcd_d6 lcd_d5 lcd_d4).map do |pin|
         options.lcd.pins.send(pin)
       end
     end
