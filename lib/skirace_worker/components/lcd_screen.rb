@@ -40,7 +40,7 @@ class Components::LcdScreen
 
       # init display
       3.times do
-        lcd_delays(42)
+        lcd_delay(42)
         
         lcd_data_pins.each do |pin|
           if [lcd_d4, lcd_d5].include?(pin)
