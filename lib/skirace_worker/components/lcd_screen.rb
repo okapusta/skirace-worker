@@ -73,7 +73,7 @@ class Components::LcdScreen
 
       lcd_enable
       # 0x33, 0b00000011, 0x28, 0x0c,
-      [0x01].each do |bit| 
+      [0x01, 0x06].each do |bit| 
         lcd_write(bit, LOW)
       end
 
