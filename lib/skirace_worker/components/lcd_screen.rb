@@ -167,6 +167,7 @@ class Components::LcdScreen
         else
           gpio.write(pin, LOW)
         end
+      end
     end
 
 end
