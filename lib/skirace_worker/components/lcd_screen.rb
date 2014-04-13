@@ -3,6 +3,17 @@ class Components::LcdScreen
 
   @@initialized = false
 
+  def init
+  	return if @@initialized
+
+  	%w(lcd_d4 lcd_d5 lcd_d6 lcd_d7).each do |pin|
+      self.class.send(:define_method, pin) do
+      	options.lcd.pins.send(pin)
+       end
+    end
+    lcd_init() 
+  end
+
   def write(string)
     clear
     
@@ -11,10 +22,11 @@ class Components::LcdScreen
 
   # 0x01       clear display
   def clear
-    lcd_init and return unless @@initialized
+    init and return unless @@initialized
 
-    lcd_write(0x01, LOW)
+    lcd_clear()
   end
+
 
   private
 
@@ -52,9 +64,9 @@ class Components::LcdScreen
       lcd_display_off()
   
       # 0x33, 0b00000011, 0x28, 0x0c, 
-      lcd_write(0x01, LOW)
+      lcd_clear()
       
-      lcd_entry_mode_set
+      lcd_entry_mode_set()
 
       lcd_display_setup(HIGH, HIGH, LOW)
 
@@ -205,6 +217,19 @@ class Components::LcdScreen
       gpio.write(lcd_d5, cursor)
       gpio.write(lcd_d4, type)
 
+      lcd_enable
+    end
+
+    def lcd_clear()
+      lcd_reset_pins
+      
+      lcd_data_pins.each do |pin|
+      	if pin == lcd_d4
+      	  gpio.write(pin, HIGH)
+      	else
+      	  gpio.write(pin, LOW)
+      	end
+      end
       lcd_enable
     end
 
