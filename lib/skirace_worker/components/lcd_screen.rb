@@ -11,9 +11,9 @@ class Components::LcdScreen
 
   # 0x01       clear display
   def clear
-    lcd_init unless @@initialized
+    lcd_init and return unless @@initialized
 
-    # lcd_write(0x01, LOW)
+    lcd_write(0x01, LOW)
   end
 
   private
@@ -102,7 +102,7 @@ class Components::LcdScreen
 
     def lcd_enable
       [LOW, HIGH, LOW].each do |mode|
-        lcd_delay(10)
+        lcd_delay(1000)
         gpio.write(options.lcd.pins.lcd_e, mode)
       end
     end
