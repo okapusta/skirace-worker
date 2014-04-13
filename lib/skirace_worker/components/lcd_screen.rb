@@ -37,6 +37,7 @@ class Components::LcdScreen
           end
           lcd_delay(3000)
         end
+      end
 
       [0x28, 0x0c, 0x06].each do |bit| # 0x33, 0x32, 
         lcd_write(bit, LOW)
