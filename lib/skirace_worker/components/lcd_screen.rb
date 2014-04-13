@@ -43,8 +43,10 @@ class Components::LcdScreen
         
         lcd_data_pins.each do |pin|
           if [lcd_d4, lcd_d5].include?(pin)
+          	p "pin #{pin} high"
             gpio.write(pin, HIGH)
           else
+          	p "pin #{pin} low"
             gpio.write(pin, LOW)
           end
         end
