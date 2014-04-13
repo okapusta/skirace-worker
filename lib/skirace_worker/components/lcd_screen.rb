@@ -44,21 +44,21 @@ class Components::LcdScreen
       gpio.write(options.lcd.pins.lcd_rs, LOW)
 
       lcd_data_pins.each do |pin|
-        gpio.write(lcd_data_pins[pin], HIGH) if pin == 1
-        gpio.write(lcd_data_pins[pin], LOW)
+        gpio.write(pin, HIGH) if pin == 1
+        gpio.write(pin, LOW)
       end
 
       lcd_enable
 
       lcd_data_pins.each do |pin|
-        gpio.write(lcd_data_pins[pin], LOW)
+        gpio.write(pin, LOW)
       end
 
       lcd_enable
 
       lcd_data_pins.each do |pin|
-        gpio.write(lcd_data_pins[pin], HIGH) if pin == 1
-        gpio.write(lcd_data_pins[pin], LOW)
+        gpio.write(pin, HIGH) if pin == 1
+        gpio.write(pin, LOW)
       end
 
       lcd_enable
