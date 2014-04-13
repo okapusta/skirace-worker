@@ -24,7 +24,8 @@ class Components::LcdScreen
     # 0x06       move cursor right
     def lcd_init
       3.times do
-        lcd_binary(0x33).split(//).each do |i|
+        bits = lcd_binary(0x33)
+        (0..7).each do |i|
           offset = i > 3 ? 4 : 0
  
           if bits[i].to_i == 1
