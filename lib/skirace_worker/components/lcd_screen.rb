@@ -38,14 +38,13 @@ class Components::LcdScreen
     end
 
     def lcd_write(bits, mode = LOW)
-      gpio.write(options.lcd.pins.lcd_rs, mode)
-
-      lcd_write_bits((3..7), lcd_binary(bits))
-      lcd_write_bits((0..3), lcd_binary(bits))
+      lcd_write_bits((3..7), mode, lcd_binary(bits))
+      lcd_write_bits((0..3), mode, lcd_binary(bits))
     end
 
-    def lcd_write_bits(range, bits)
-      # lcd_reset_pins
+    def lcd_write_bits(range, mode, bits)
+      gpio.write(options.lcd.pins.lcd_rs, mode)
+      lcd_reset_pins
 
       offset = range.include?(0) ? 0 : 4
       
@@ -75,7 +74,7 @@ class Components::LcdScreen
     end
 
     def lcd_data_pins
-      %w(lcd_d7 lcd_d6 lcd_d5 lcd_d4).map do |pin|
+      %w(lcd_d4 lcd_d5 lcd_d6 lcd_d7).map do |pin|
         options.lcd.pins.send(pin)
       end
     end
