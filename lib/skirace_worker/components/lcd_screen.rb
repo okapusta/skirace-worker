@@ -40,8 +40,8 @@ class Components::LcdScreen
     def lcd_write(bits, mode = LOW)
       gpio.write(options.lcd.pins.lcd_rs, mode)
 
-      lcd_write_bits((0..3), lcd_binary(bits))
       lcd_write_bits((3..7), lcd_binary(bits))
+      lcd_write_bits((0..3), lcd_binary(bits))
     end
 
     def lcd_write_bits(range, bits)
