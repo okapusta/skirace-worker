@@ -25,7 +25,7 @@ class Components::LcdScreen
     def lcd_init
       
       %w(lcd_d4 lcd_d5 lcd_d6 lcd_d7).each do |pin|
-      	self.class.send(:define_method, :pin, options.lcd.pins.send(pin))
+      	self.class.send(:define_method, pin, Proc.new { options.lcd.pins.send(pin) })
       end
 
       gpio.write(options.lcd.pins.lcd_rs, LOW)
