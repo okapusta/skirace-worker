@@ -65,8 +65,8 @@ class Components::LcdScreen
     end
 
     def lcd_write(bits, mode = LOW)
-      lcd_write_bits((0..3), mode, lcd_binary(bits))
       lcd_write_bits((3..7), mode, lcd_binary(bits))
+      lcd_write_bits((0..3), mode, lcd_binary(bits))
     end
 
     def lcd_write_bits(range, mode, bits)
