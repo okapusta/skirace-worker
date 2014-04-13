@@ -150,10 +150,8 @@ class Components::LcdScreen
     def lcd_set_no_display_lines(n = 2)
       lcd_data_pins.each do |pin|
         if pin == lcd_d7
-          p "pin #{n == 2 ? HIGH : LOW}"
           gpio.write(pin, ( n == 2 ? HIGH : LOW ))
         else 
-          p "pin #{pin} low"
           gpio.write(pin, LOW)
         end
       end
@@ -166,8 +164,10 @@ class Components::LcdScreen
 
       lcd_data_pins.each do |pin|
         if pin == lcd_d7
+          p "pin #{pin} high"
           gpio.write(pin, HIGH) 
         else
+        	p "pin #{pin} low"
           gpio.write(pin, LOW)
         end
       end
@@ -218,8 +218,10 @@ class Components::LcdScreen
       
       lcd_data_pins.each do |pin|
       	if pin == lcd_d4
+      		p "pin #{pin} high"
       	  gpio.write(pin, HIGH)
       	else
+      		p "pin #{pin} low"
       	  gpio.write(pin, LOW)
       	end
       end
