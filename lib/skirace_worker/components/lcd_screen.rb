@@ -57,11 +57,11 @@ class Components::LcdScreen
       lcd_display_off()
   
       # 0x33, 0b00000011, 0x28, 0x0c, 
-      # lcd_clear()
+      lcd_clear()
       
-      # lcd_entry_mode_set()
+      lcd_entry_mode_set()
 
-      # lcd_display_setup(HIGH, HIGH, LOW)
+      lcd_display_setup(HIGH, HIGH, LOW)
 
       @@initialized = true
     end
@@ -114,7 +114,7 @@ class Components::LcdScreen
     def lcd_enable
       [LOW, HIGH, LOW].each do |mode|
         gpio.write(options.lcd.pins.lcd_e, mode)
-        lcd_delay_microseconds(10)
+        lcd_delay_microseconds(150)
       end
     end
 
