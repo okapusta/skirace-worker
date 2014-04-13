@@ -7,6 +7,8 @@ class Injector
 
   def initialize(opts = {})
     load_config
+    
+    io.wiringPiSetup
   end
 
   def http_client
@@ -18,7 +20,7 @@ class Injector
   end
 
   def io
-    WiringPi::GPIO.new
+    WiringPi
   end
 
   private

@@ -2,18 +2,18 @@ class RaspberryPi::Gpio
   takes :io
 
   def read(pin)
-    io.mode(pin, INPUT)
-    io.read(pin)
+    mode(pin, INPUT)
+    io.digitalRead(pin)
   end
   
   def write(pin, value)
-    io.mode(pin, OUTPUT)
-    io.write(pin, value)
+    mode(pin, OUTPUT)
+    io.digitalWrite(pin, value)
   end
  
   private
 
     def mode(pin, mode)
-      io.mode(pin, mode)
+      io.pinMode(pin, mode)
     end
 end
