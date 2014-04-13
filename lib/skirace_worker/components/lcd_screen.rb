@@ -29,6 +29,8 @@ class Components::LcdScreen
       3.times do
         lcd_data_pins.each do |pin|
           if lcd_data_pins.first(2).include?(pin)
+            p "init pin: #{pin}"
+
             gpio.write(pin, HIGH)
           else
             gpio.write(pin, LOW)
@@ -37,45 +39,17 @@ class Components::LcdScreen
         lcd_enable
       end 
 
-      # 4 bit mode
-      2.times do 
-        lcd_data_pins.each do |pin| 
-          if lcd_data_pins[1] == pin
-            gpio.write(pin, HIGH)
-          else
-            gpio.write(pin, LOW)
-          end
-        end
-        
-        lcd_enable
-      end
+      lcd_set_4_bit_mode()
+      lcd_set_no_display_lines(2)
 
-      lcd_data_pins.each do |pin|
-        if pin == 1
-          gpio.write(pin, HIGH)
-        else 
-          gpio.write(pin, LOW)
-        end
-      end
-
-      lcd_enable
-
-      lcd_data_pins.each do |pin|
-        gpio.write(pin, LOW)
-      end
-
-      lcd_enable
-
-      lcd_data_pins.each do |pin|
-        gpio.write(pin, HIGH) if pin == 1
-        gpio.write(pin, LOW)
-      end
-
-      lcd_enable
+      lcd_display_off()
+  
       # 0x33, 0b00000011, 0x28, 0x0c,
-      [0x01, 0x06].each do |bit| 
+      [0x01].each do |bit| 
         lcd_write(bit, LOW)
       end
+
+      lcd_set_entry_mode
 
       @@initialized = true
     end
@@ -134,12 +108,65 @@ class Components::LcdScreen
       lcd_data_pins.each do |pin|
         gpio.write(pin, LOW)
       end
+
+      lcd_enable
     end
 
     def lcd_data_pins
       %w(lcd_d4 lcd_d5 lcd_d6 lcd_d7).map do |pin|
         options.lcd.pins.send(pin)
       end
+    end
+
+    def lcd_set_4_bit_mode
+      2.times do 
+        lcd_data_pins.each do |pin| 
+          if lcd_data_pins[1] == pin
+            gpio.write(pin, HIGH)
+          else
+            gpio.write(pin, LOW)
+          end
+        end
+        
+        lcd_enable
+      end
+    end
+
+    def lcd_set_no_display_lines(n = 2)
+      lcd_data_pins.each do |pin|
+        if pin == 1
+          gpio.write(pin, ( n == 2 ? HIGH : LOW ))
+        else 
+          gpio.write(pin, LOW)
+        end
+      end
+
+      lcd_enable
+    end
+
+    def lcd_display_off
+      lcd_reset_pins
+
+      lcd_data_pins.each do |pin|
+        if pin == 1
+          gpio.write(pin, HIGH) 
+        else
+          gpio.write(pin, LOW)
+        end
+      end
+
+      lcd_enable
+    end
+
+    def lcd_set_entry_mode
+      lcd_reset_pins
+
+      lcd_data_pins.each do |pin|
+        if lcd_data_pins.first(3).include?(pin)
+          gpio.write(pin, HIGH)
+        else
+          gpio.write(pin, LOW)
+        end
     end
 
 end
