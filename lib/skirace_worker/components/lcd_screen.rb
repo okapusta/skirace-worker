@@ -13,7 +13,7 @@ class Components::LcdScreen
   def clear
     lcd_init unless @@initialized
 
-    lcd_write(0x01, LOW)
+    # lcd_write(0x01, LOW)
   end
 
   private
@@ -88,8 +88,10 @@ class Components::LcdScreen
     end
 
     def lcd_write(bits, mode = LOW)
-      lcd_write_bits((3..7), mode, lcd_binary(bits))
+      p bits
+      p %w(lcd_d4 lcd_d5 lcd_d6 lcd_d7).reverse
       lcd_write_bits((0..3), mode, lcd_binary(bits))
+      lcd_write_bits((3..7), mode, lcd_binary(bits))
     end
 
     def lcd_write_bits(range, mode, bits)
