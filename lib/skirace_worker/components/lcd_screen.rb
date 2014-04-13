@@ -1,9 +1,9 @@
 class Components::LcdScreen
   takes :gpio, :options
 
-  def write(string)
-    lcd_init unless @@initialized
+  @@initialized = false
 
+  def write(string)
     clear
     
     lcd_string(string)   
@@ -11,6 +11,8 @@ class Components::LcdScreen
 
   # 0x01       clear display
   def clear
+    lcd_init unless @@initialized
+
     lcd_write(0x01, LOW)
   end
 
@@ -51,6 +53,10 @@ class Components::LcdScreen
     end
 
     def lcd_write_bits(range, mode, bits)
+      puts "Bits: #{bits}"
+      puts "#{lcd_data_pins.reverse}"
+      puts "Range: #{range}, mode: #{mode}"
+      
       gpio.write(options.lcd.pins.lcd_rs, mode)
       lcd_reset_pins
 
