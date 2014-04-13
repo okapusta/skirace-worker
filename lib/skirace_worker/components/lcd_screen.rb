@@ -43,7 +43,7 @@ class Components::LcdScreen
           if lcd_data_pins[1] == pin
             gpio.write(pin, HIGH)
           else
-            gpio.write(pin LOW)
+            gpio.write(pin, LOW)
           end
         end
         
