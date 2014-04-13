@@ -37,7 +37,7 @@ class Components::LcdScreen
         lcd_delay_miliseconds(42)
         
         lcd_data_pins.each do |pin|
-          if [lcd_4, lcd_5].include?(pin)
+          if [lcd_d4, lcd_d5].include?(pin)
             gpio.write(pin, HIGH)
           else
             gpio.write(pin, LOW)
@@ -133,7 +133,7 @@ class Components::LcdScreen
     def lcd_set_4_bit_mode
       2.times do 
         lcd_data_pins.each do |pin| 
-          if lcd_data_pins[1] == pin
+          if lcd_d5 == pin
             gpio.write(pin, HIGH)
           else
             gpio.write(pin, LOW)
@@ -146,7 +146,7 @@ class Components::LcdScreen
 
     def lcd_set_no_display_lines(n = 2)
       lcd_data_pins.each do |pin|
-        if pin == 1
+        if pin == lcd_d7
           gpio.write(pin, ( n == 2 ? HIGH : LOW ))
         else 
           gpio.write(pin, LOW)
@@ -160,7 +160,7 @@ class Components::LcdScreen
       lcd_reset_pins
 
       lcd_data_pins.each do |pin|
-        if pin == 1
+        if pin == lcd_d7
           gpio.write(pin, HIGH) 
         else
           gpio.write(pin, LOW)
@@ -174,7 +174,7 @@ class Components::LcdScreen
       lcd_reset_pins
 
       lcd_data_pins.each do |pin|
-        if lcd_data_pins.first(3).include?(pin)
+        if [lcd_d6, lcd_d5, lcd_d4].include?(pin)
           gpio.write(pin, HIGH)
         else
           gpio.write(pin, LOW)
@@ -184,8 +184,10 @@ class Components::LcdScreen
 
 
     def lcd_set_cursor_position
-      lcd_reset_pins.each do |pin|
-        if lcd_data_pins[1..2].include?(pin)
+      lcd_reset_pins
+
+      lcd_data_pins.each do |pin|
+        if [lcd_d6, lcd_d5].include?(pin)
           gpio.write(pin, HIGH)
         else
           gpio.write(pin, LOW)
@@ -198,10 +200,10 @@ class Components::LcdScreen
     def lcd_display_setup(display, cursor, type)
       lcd_reset_pins
 
-      gpio.write(options.lcd.pins.lcd_d7, HIGH)
-      gpio.write(options.lcd.pins.lcd_d6, display)
-      gpio.write(options.lcd.pins.lcd_d5, cursor)
-      gpio.write(options.lcd.pins.lcd_d4, type)
+      gpio.write(lcd_d7, HIGH)
+      gpio.write(lcd_d6, display)
+      gpio.write(lcd_d5, cursor)
+      gpio.write(lcd_d4, type)
 
       lcd_enable
     end
