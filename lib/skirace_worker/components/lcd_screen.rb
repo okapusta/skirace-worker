@@ -1,11 +1,9 @@
 class Components::LcdScreen
   takes :gpio, :options
 
-  cattr_accessor :initialized
-
   def write(string)
-    lcd_init unless initialized
-    
+    lcd_init unless @@initialized
+
     clear
     
     lcd_string(string)   
@@ -27,7 +25,7 @@ class Components::LcdScreen
         lcd_write(bit, LOW)
       end
 
-      initialized = true
+      @@initialized = true
     end
 
     def lcd_binary(integer)
