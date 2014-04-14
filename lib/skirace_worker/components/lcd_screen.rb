@@ -16,14 +16,11 @@ class Components::LcdScreen
   def init
     gpio.write(options.lcd.pins.lcd_rs, LOW)
 
-    3.times do
-      [0b0010, 0b0010, 0b0001, 0b0000, 0b1110, 0b0000, 0b0110].each do |bits|
-        lcd_write_4_bits(lcd_binary_4_bit_array(bits))
-        lcd_enable()
-      end
-      lcd_delay_miliseconds(10)
-      p '---'
+    [0b0010, 0b0010, 0b0001, 0b0000, 0b1110, 0b0000, 0b0110].each do |bits|
+      lcd_write_4_bits(lcd_binary_4_bit_array(bits))
+      lcd_enable()
     end
+    lcd_delay_miliseconds(10)
   end
 
   def lcd_write_4_bits(bits)
