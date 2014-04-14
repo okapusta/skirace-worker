@@ -27,10 +27,11 @@ class Components::LcdScreen
   def lcd_write_4_bits(bits)
     bits.each_with_index do |item, index|
       if item.to_i == 1 
-        print "lcd_data_pins[index]"
+        print "#{lcd_data_pins[index]}"
         gpio.write(lcd_data_pins[index], HIGH)
       else
         gpio.write(lcd_data_pins[index], LOW)
+        print 0
       end
     end
     print "\n"
