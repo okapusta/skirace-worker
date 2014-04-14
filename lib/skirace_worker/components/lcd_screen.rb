@@ -15,7 +15,7 @@ class Components::LcdScreen
   # end
   def init
     [0b0010, 0b0010, 0b0001, 0b0000, 0b1110, 0b0000, 0b0110].each do |bits|
-      lcd_write_4_bits(lcd_binary_4(bits))
+      lcd_write_4_bits(lcd_binary_4_bit_array(bits))
       lcd_enable()
     end
   end
@@ -30,8 +30,8 @@ class Components::LcdScreen
     end
   end
 
-  def lcd_binary_4(integer)
-    integer.to_s(2).rjust(4, '0')
+  def lcd_binary_4_bit_array(integer)
+    integer.to_s(2).rjust(4, '0').split(//)
   end
 
   def write(string)
