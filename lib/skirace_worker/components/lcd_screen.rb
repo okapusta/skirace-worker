@@ -20,18 +20,20 @@ class Components::LcdScreen
         lcd_enable()
       end
       lcd_delay_miliseconds(10)
+      p '---'
     end
   end
 
   def lcd_write_4_bits(bits)
     bits.each_with_index do |item, index|
       if item.to_i == 1 
-        puts "dupa"
+        print "lcd_data_pins[index]"
         gpio.write(lcd_data_pins[index], HIGH)
       else
         gpio.write(lcd_data_pins[index], LOW)
       end
     end
+    print "\n"
   end
 
   def lcd_binary_4_bit_array(integer)
