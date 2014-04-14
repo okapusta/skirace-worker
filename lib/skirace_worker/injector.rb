@@ -23,6 +23,10 @@ class Injector
     Wiringpi
   end
 
+  def time_sleep
+    1.0000000/1000000
+  end
+
   private
 
     def load_config

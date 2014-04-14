@@ -1,5 +1,5 @@
 class Components::LcdScreen
-  takes :gpio, :options
+  takes :gpio, :options, :time_sleep
 
   @@initialized = false
 
@@ -60,7 +60,7 @@ class Components::LcdScreen
 
       # init display
       3.times do
-        lcd_delay_miliseconds(42)
+        lcd_delay(42)
         
         lcd_data_pins.each do |pin|
           if [lcd_d4, lcd_d5].include?(pin)
@@ -70,17 +70,23 @@ class Components::LcdScreen
           end
         end
         lcd_enable
-      end 
+      end
+      lcd_delay
 
       lcd_set_4_bit_mode()
+      lcd_delay
       lcd_set_no_display_lines(2)
+      lcd_delay
 
       lcd_display_off()
+      lcd_delay
   
       # 0x33, 0b00000011, 0x28, 0x0c, 
       lcd_clear()
+      lcd_delay
       
       lcd_entry_mode_set()
+      lcd_delay
 
       lcd_display_setup(HIGH, HIGH, LOW)
 
@@ -132,12 +138,15 @@ class Components::LcdScreen
       sleep(miliseconds/1000.to_f)
     end
 
+    def lcd_delay(time = 1)
+      sleep(time*time_sleep)
+    end
+
     def lcd_enable
       [LOW, HIGH, LOW].each do |mode|
         gpio.write(options.lcd.pins.lcd_e, mode)
-        lcd_delay_microseconds(10) # 150
+        lcd_delay(10) # 150
       end
-      lcd_delay_microseconds(1)
     end
 
     def lcd_reset_pins
