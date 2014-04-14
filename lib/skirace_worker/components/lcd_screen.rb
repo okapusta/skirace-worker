@@ -3,15 +3,35 @@ class Components::LcdScreen
 
   @@initialized = false
 
-  def init
-  	return if @@initialized
+  # def init
+  # 	return if @@initialized
 
-  	%w(lcd_d4 lcd_d5 lcd_d6 lcd_d7).each do |pin|
-      self.class.send(:define_method, pin) do
-      	options.lcd.pins.send(pin)
-       end
+  # 	%w(lcd_d4 lcd_d5 lcd_d6 lcd_d7).each do |pin|
+  #     self.class.send(:define_method, pin) do
+  #     	options.lcd.pins.send(pin)
+  #      end
+  #   end
+  #   lcd_init() 
+  # end
+  def init
+    [0b0010, 0b0010, 0b0001, 0b0000, 0b1110, 0b0000, 0b0110].each do |bits|
+      lcd_write_4_bits(lcd_binary_4(bits))
+      lcd_enable()
     end
-    lcd_init() 
+  end
+
+  def lcd_write_4_bits(bits)
+    bits.each_with_index do |item, index|
+      if item.to_i == 1 
+        gpio.write(lcd_data_pins[index], HIGH)
+      else
+        gpio.write(lcd_data_pins[index], LOW)
+      end
+    end
+  end
+
+  def lcd_binary_4(integer)
+    integer.to_s(2).rjust(4, '0')
   end
 
   def write(string)

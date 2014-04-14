@@ -21,3 +21,11 @@ How to run
 4. Run
 
   ``rvmsudo bundle exec skirace-worker``
+
+5. Debug
+  
+  ``rvmsudo bundle exec irb -r ./lib/skirace_worker.rb``
+
+  Create Injector object ``i = Injector.new`` and eg. write to screen
+
+  ``i.lcd_screen.write('debug')``
