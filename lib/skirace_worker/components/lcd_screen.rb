@@ -14,15 +14,19 @@ class Components::LcdScreen
   #   lcd_init() 
   # end
   def init
-    [0b0010, 0b0010, 0b0001, 0b0000, 0b1110, 0b0000, 0b0110].each do |bits|
-      lcd_write_4_bits(lcd_binary_4_bit_array(bits))
-      lcd_enable()
+    3.times do
+      [0b0010, 0b0010, 0b0001, 0b0000, 0b1110, 0b0000, 0b0110].each do |bits|
+        lcd_write_4_bits(lcd_binary_4_bit_array(bits))
+        lcd_enable()
+      end
+      lcd_delay_miliseconds(10)
     end
   end
 
   def lcd_write_4_bits(bits)
     bits.each_with_index do |item, index|
       if item.to_i == 1 
+        puts "dupa"
         gpio.write(lcd_data_pins[index], HIGH)
       else
         gpio.write(lcd_data_pins[index], LOW)
