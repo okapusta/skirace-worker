@@ -35,6 +35,12 @@ class Components::LcdScreen
       lcd_write_4_bits(lcd_binary_4_bit_array(bits))
       lcd_delay_miliseconds
     end
+
+    lcd_delay_miliseconds(10)
+
+    [0b0000, 0b1111, 0b0000, 0b0110].each do |bits|
+      lcd_write_4_bits(lcd_binary_4_bit_array(bits))
+    end
   end
 
   def lcd_write_4_bits(bits)
