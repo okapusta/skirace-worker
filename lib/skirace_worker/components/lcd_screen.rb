@@ -71,7 +71,7 @@ class Components::LcdScreen
         if char == "\n"
           # lcd_write(options.lcd.line_2)
         else
-          gpio.write(options.lcd.pins.pin_rs, HIGH)
+          gpio.write(options.lcd.pins.lcd_rs, HIGH)
 
           lcd_binary_8_bit_array(char.ord).each_slice(4).each do |bits|
             lcd_write_4_bits(bits)
