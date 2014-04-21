@@ -18,8 +18,12 @@ class Components::LcdScreen
 
      [0b0011, 
       0b0011, 
-      0b0011, 
-      0b0010, 
+      0b0011].each do |bits|
+      lcd_write_4_bits(lcd_binary_4_bit_array(bits))
+      lcd_delay_miliseconds(42)
+    end 
+
+      [0b0010, 
       0b0010,
       0b1000, 
       0b0000,
@@ -29,22 +33,19 @@ class Components::LcdScreen
       0b0000, 
       0b0111].each do |bits|
       lcd_write_4_bits(lcd_binary_4_bit_array(bits))
-      lcd_enable()
+      lcd_delay_miliseconds
     end
-    lcd_delay_miliseconds(10)
   end
 
   def lcd_write_4_bits(bits)
     bits.each_with_index do |item, index|
       if item.to_i == 1 
-        print "#{lcd_data_pins[index]}"
         gpio.write(lcd_data_pins[index], HIGH)
       else
         gpio.write(lcd_data_pins[index], LOW)
-        print 0
       end
     end
-    print "\n"
+    lcd_enable()
   end
 
   def lcd_binary_4_bit_array(integer)
@@ -52,8 +53,6 @@ class Components::LcdScreen
   end
 
   def write(string)
-    clear
-    
     lcd_string(string)   
   end
 
@@ -151,7 +150,7 @@ class Components::LcdScreen
       sleep(microseconds/1000000.to_f)
     end
 
-    def lcd_delay_miliseconds(miliseconds)
+    def lcd_delay_miliseconds(miliseconds = 1)
       sleep(miliseconds/1000.to_f)
     end
 
