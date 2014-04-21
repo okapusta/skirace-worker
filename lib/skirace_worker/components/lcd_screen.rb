@@ -28,7 +28,7 @@ class Components::LcdScreen
 
     lcd_delay_miliseconds(10)
 
-    [0b0000, 0b1111, 0b0000, 0b0110].each do |bits|
+    [ 0b0000, 0b1111, 0b0000, 0b0110 ].each do |bits|
       lcd_write_4_bits(lcd_binary_4_bit_array(bits))
     end
   end
@@ -39,7 +39,11 @@ class Components::LcdScreen
 
   # 0x01       clear display
   def clear
-    init and return unless @@initialized
+    gpio.write(options.lcd.pins.lcd_rs, LOW)
+
+    [0b0000, 0b0001].each do |pins|
+      lcd_write_4_bits(lcd_binary_4_bit_array(bits))
+    end
   end
 
 
@@ -69,7 +73,11 @@ class Components::LcdScreen
 
       message.split(//).each do |char|
         if char == "\n"
-          # lcd_write(options.lcd.line_2)
+          gpio.write(options.lcd.pins.lcd_rs, LOW)
+
+          lcd_binary_8_bit_array(options.lcd.line_2).each_slice(4).each do |bits|
+            lcd_write_4_bits(bits)
+          end
         else
           gpio.write(options.lcd.pins.lcd_rs, HIGH)
 
