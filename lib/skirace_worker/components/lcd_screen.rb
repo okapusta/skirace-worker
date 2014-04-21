@@ -60,8 +60,8 @@ class Components::LcdScreen
       integer.to_s(2).rjust(4, '0').split(//)
     end
 
-    def lcd_binary(integer)
-      integer.to_s(2).rjust(8, '0')
+    def lcd_binary_8_bit_array(integer)
+      integer.to_s(2).rjust(8, '0').split(//)
     end
 
     def lcd_string(string)
@@ -71,7 +71,9 @@ class Components::LcdScreen
         if char == "\n"
           # lcd_write(options.lcd.line_2)
         else
-          lcd_write_4_bits(lcd_binary_4_bit_array(char.ord))
+          lcd_binary_8_bit_array(char.ord).each_slice(4).each do |bits|
+            lcd_write_4_bits(bits)
+          end
         end
       end 
     end
