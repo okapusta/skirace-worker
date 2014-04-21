@@ -41,7 +41,7 @@ class Components::LcdScreen
   def clear
     gpio.write(options.lcd.pins.lcd_rs, LOW)
 
-    [0b0000, 0b0001].each do |pins|
+    [0b0000, 0b0001].each do |bits|
       lcd_write_4_bits(lcd_binary_4_bit_array(bits))
     end
   end
