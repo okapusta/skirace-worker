@@ -1,5 +1,5 @@
 development:
-  memcache_server: localhost:11211 #remote host
+  memcache_server: 192.168.1.106:11211 #remote host
   memcache_options:
     namespace: skirace
     compress: true
