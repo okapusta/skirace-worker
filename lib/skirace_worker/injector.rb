@@ -27,6 +27,10 @@ class Injector
     1.0000000/1000000
   end
 
+  def time
+    Time
+  end 
+
   private
 
     def load_config

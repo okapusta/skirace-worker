@@ -31,14 +31,18 @@ class Components::LcdScreen
     [ 0b0000, 0b1111, 0b0000, 0b0110 ].each do |bits|
       lcd_write_4_bits(lcd_binary_4_bit_array(bits))
     end
+
+    clear()
   end
 
   def write(string)
+    self.tainted? ? clear() : self.taint
+    
     lcd_string(string)   
   end
 
   # 0x01       clear display
-  def clear
+  def clear    
     gpio.write(options.lcd.pins.lcd_rs, LOW)
 
     [0b0000, 0b0001].each do |bits|

@@ -21,6 +21,12 @@ class Options
       })
   end
 
+  def memcache_server
+  end
+
+  def memcache_client
+  end
+
   private
 
     def struct(hash)
