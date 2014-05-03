@@ -6,7 +6,6 @@ PATH
       dalli
       dependor
       god
-      god
       pry
       rest-client
       wiringpi
