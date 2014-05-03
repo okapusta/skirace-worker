@@ -1,7 +1,6 @@
 development:
-  skirace:
-    memcache_server: 192.168.1.106:11211 #remote host
-    memcache_options:
-      namespace: skirace
-      compress: true
-      expires_in: 300
+  memcache_server: 192.168.1.106:11211 #remote host
+  memcache_options:
+    namespace: skirace
+    compress: true
+    expires_in: 300

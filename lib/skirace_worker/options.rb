@@ -1,6 +1,6 @@
 class Options
   takes :config
-  
+
   def capacitor
     struct({
       pin: 7
@@ -32,7 +32,7 @@ class Options
   end
 
   def activation_threshold
-    200
+    2
   end
 
   private
