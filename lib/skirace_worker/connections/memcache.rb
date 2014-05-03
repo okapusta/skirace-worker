@@ -10,7 +10,7 @@ class Connections::Memcache
   private
     
     def client
-      @client ||= Dalli::Client.new(options.memcache_server, options.memcache_client)
+      @client ||= ::Dalli::Client.new(options.memcache_server, options.memcache_client)
     end
     alias_method :memcache_connection, :client
 end

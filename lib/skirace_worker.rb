@@ -2,6 +2,7 @@ require 'dependor'
 require 'dependor/shorty'
 require 'wiringpi'
 require 'ostruct'
+require 'dalli'
 require 'pry'
 
 module Components; end
