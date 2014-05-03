@@ -4,3 +4,4 @@ development:
     namespace: skirace
     compress: true
     expires_in: 300
+    socket_max_failures: 9999
