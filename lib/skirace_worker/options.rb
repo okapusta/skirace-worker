@@ -1,4 +1,6 @@
 class Options
+  takes :config
+  
   def capacitor
     struct({
       pin: 7
