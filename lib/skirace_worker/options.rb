@@ -22,14 +22,27 @@ class Options
   end
 
   def memcache_server
+    config.memcache_server
   end
 
   def memcache_client
+    symbolize_keys!(config.memcache_options)
+  end
+
+  def activation_threshold
+    200
   end
 
   private
 
     def struct(hash)
       OpenStruct.new(hash)
+    end
+
+    def symbolize_keys!(hash)
+      hash.inject({}) do |h, (k, v)|
+        h[k.to_sym] = v
+        h
+      end
     end
 end
