@@ -16,7 +16,6 @@ Gem::Specification.new do |s|
   s.homepage = "http://kapuh.com"
   s.license = "MIT"
 
-  s.add_dependency "god"
   s.add_dependency "dalli"
   s.add_dependency "dependor"
   s.add_dependency "wiringpi"

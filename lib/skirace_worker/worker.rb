@@ -8,7 +8,7 @@ class Worker
       if result < options.activation_threshold
         start_time = memcache.get("start_time")
 
-        lcd_screen.write(formatter.time_format(end_time - time.now))
+        lcd_screen.write(formatter.time_format(time.now-start_time))
       end
     end
   end
