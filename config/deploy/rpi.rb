@@ -1,4 +1,4 @@
-role :app, 'app@192.168.1.115'
+role :app, 'app@192.168.1.121'
 
 after :deploy, "deploy:build"
 
