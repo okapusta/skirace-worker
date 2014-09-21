@@ -1,4 +1,6 @@
 require 'a9n'
+require 'json'
+require 'rest-client'
 
 class Injector
   include Dependor::AutoInject
@@ -30,6 +32,10 @@ class Injector
   def time
     Time
   end 
+
+  def json_parser
+    JSON
+  end
 
   private
 

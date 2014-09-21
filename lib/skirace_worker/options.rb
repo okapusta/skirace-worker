@@ -35,6 +35,10 @@ class Options
     2
   end
 
+  def api_url
+    "http://192.168.10.1/api/endtime"
+  end
+
   private
 
     def struct(hash)
