@@ -1,6 +1,4 @@
 class Options
-  takes :config
-
   def capacitor
     struct({
       pin: 7
@@ -23,14 +21,6 @@ class Options
       })
   end
 
-  def memcache_server
-    config.memcache_server
-  end
-
-  def memcache_client
-    symbolize_keys!(config.memcache_options)
-  end
-
   def activation_threshold
     2
   end
@@ -43,12 +33,5 @@ class Options
 
     def struct(hash)
       OpenStruct.new(hash)
-    end
-
-    def symbolize_keys!(hash)
-      hash.inject({}) do |h, (k, v)|
-        h[k.to_sym] = v
-        h
-      end
     end
 end
