@@ -4,8 +4,8 @@ class Formatter
     parsed_response = json_parser.parse(response)
     
     <<-eos
-      #{parsed_response[:first_name]} #{parsed_response[:last_name]} \n
-      time: #{parsed_response[:total_time]}
+      #{parsed_response['first_name']} #{parsed_response['last_name']} \n
+      time: #{parsed_response['total_time']}
     eos
   end
 end
